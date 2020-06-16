@@ -6,6 +6,14 @@ jobs:
   slide:
     runs-on: ubuntu-latest
     steps:
+      - name: Add reaction
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          token: ${{ secrets.SLIDE_WORKFLOWS_TOKEN }}
+          repository: ${{ github.event.client_payload.github.payload.repository.full_name }}
+          comment-id: ${{ github.event.client_payload.github.payload.comment.id }}
+          reaction-type: eyes
+
       - name: Checkout
         uses: actions/checkout@v2
         with:
@@ -41,4 +49,4 @@ jobs:
 
             [Command run output][1]
 
-            [1]: ${{ steps.run.outputs.run-url }}
+            [1]: https://github.com/ayazhafiz/slide-workflows/runs/${{ github.run_id }}
