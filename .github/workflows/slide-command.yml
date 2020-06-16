@@ -25,12 +25,22 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
+      
+      - name: Cache Rust
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-build-
 
       - name: Build and run
         id: run
         run: |
-          cargo build --target-dir out
-          out/debug/slide ${{ github.event.client_payload.slash_command.args }} &> out.slide || true
+          target/debug/slide ${{ github.event.client_payload.slash_command.args }} &> out.slide || true
           SLIDE_OUT=$(cat out.slide)
           JSON_STRING=$(jq -cn --arg out "$SLIDE_OUT" '{slide_out: $out}')
           echo "::set-output name=matrix::$JSON_STRING"
