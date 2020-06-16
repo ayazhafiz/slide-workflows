@@ -30,7 +30,7 @@ jobs:
         id: run
         run: |
           cargo build --target-dir out
-          out/debug/slide ${{ github.event.client_payload.slash_command.args }} &> out.slide
+          out/debug/slide ${{ github.event.client_payload.slash_command.args }} &> out.slide || true
           export SLIDE_OUT=$(cat out.slide)
           echo ::set-output name=slide-out::$SLIDE_OUT
 
@@ -49,4 +49,4 @@ jobs:
 
             [Command run output][1]
 
-            [1]: https://github.com/ayazhafiz/slide-workflows/runs/${{ github.run_id }}
+            [1]: https://github.com/ayazhafiz/slide-workflows/actions/runs/${{ github.run_id }}
