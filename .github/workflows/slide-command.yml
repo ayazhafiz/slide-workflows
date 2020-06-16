@@ -40,4 +40,5 @@ jobs:
             ```
 
             [Command run output][1]
-            [1]: ${{ steps.vars.outputs.run-url }}
+
+            [1]: ${{ steps.run.outputs.run-url }}
