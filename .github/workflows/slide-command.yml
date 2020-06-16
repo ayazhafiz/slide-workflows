@@ -20,22 +20,23 @@ jobs:
           token: ${{ secrets.SLIDE_WORKFLOWS_TOKEN }}
           repository: ${{ github.event.client_payload.pull_request.head.repo.full_name || github.event.client_payload.github.payload.repository.full_name }}
           ref: ${{ github.event.client_payload.pull_request.head.ref || 'master' }}
-
-      - name: Install Rust
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
       
       - name: Cache Rust
         uses: actions/cache@v2
         with:
           path: |
-            ~/.cargo/registry
-            ~/.cargo/git
+            ~/.cache/sccache
+            ~/.cargo/
+            ~/.rustup/
             target
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: |
             ${{ runner.os }}-cargo-
+
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
 
       - name: Build and run
         id: run
