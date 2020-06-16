@@ -20,7 +20,7 @@ jobs:
           token: ${{ secrets.SLIDE_WORKFLOWS_TOKEN }}
           repository: ${{ github.event.client_payload.pull_request.head.repo.full_name || github.event.client_payload.github.payload.repository.full_name }}
           ref: ${{ github.event.client_payload.pull_request.head.ref || 'master' }}
-          
+
       - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
@@ -31,7 +31,11 @@ jobs:
         run: |
           cargo build --target-dir out
           out/debug/slide ${{ github.event.client_payload.slash_command.args }} &> out.slide || true
-          export SLIDE_OUT=$(cat out.slide)
+          SLIDE_OUT=$(cat out.slide)
+          SLIDE_OUT="${SLIDE_OUT//'%'/'%25'}"
+          SLIDE_OUT="${SLIDE_OUT//$'\n'/'%0A'}"
+          SLIDE_OUT="${SLIDE_OUT//$'\r'/'%0D'}"
+          echo $SLIDE_OUT
           echo ::set-output name=slide-out::$SLIDE_OUT
 
       - name: Create comment
