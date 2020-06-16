@@ -43,7 +43,7 @@ jobs:
         id: unmarshall
         uses: frabert/replace-string-action@v1.1
         with:
-          pattern: '(\\\\ )'
+          pattern: '(\\ )'
           string: "${{ steps.run.outputs.slide-out }}"
           replace-with: '\ '
           flags: 'g'
