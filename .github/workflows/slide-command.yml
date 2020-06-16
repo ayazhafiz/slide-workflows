@@ -1,9 +1,9 @@
-name: run-slide-command
+name: slide-command
 on:
   repository_dispatch:
-    types: [run-slide-command]
+    types: [slide-command]
 jobs:
-  runSlide:
+  slide:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
