@@ -33,7 +33,7 @@ jobs:
           out/debug/slide ${{ github.event.client_payload.slash_command.args }} &> out.slide || true
           SLIDE_OUT=$(cat out.slide)
           SLIDE_OUT="${SLIDE_OUT//'%'/'%25'}"
-          SLIDE_OUT="${SLIDE_OUT//' '/'%20'}"
+          SLIDE_OUT="${SLIDE_OUT//' '/'\\ '}"
           SLIDE_OUT="${SLIDE_OUT//$'\n'/'%0A'}"
           SLIDE_OUT="${SLIDE_OUT//$'\r'/'%0D'}"
           echo $SLIDE_OUT
