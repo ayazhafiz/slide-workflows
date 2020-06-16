@@ -9,7 +9,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.SLIDE_WORKFLOWS_TOKEN }}
           repository: ${{ github.event.client_payload.pull_request.head.repo.full_name || github.event.client_payload.github.payload.repository.full_name }}
           ref: ${{ github.event.client_payload.pull_request.head.ref || 'master' }}
           
@@ -21,14 +21,14 @@ jobs:
       - name: Build and run
         id: run
         run: |
-          cargo build
-          export SLIDE_OUT="$({./target/debug/slide ${{ github.event.client_payload.slash_command.args }} } 2>&1)"
+          cargo build --target-dir out
+          export SLIDE_OUT="$({ out/debug/slide ${{ github.event.client_payload.slash_command.args }} } 2>&1)"
           echo ::set-output name=slide-out::$SLIDE_OUT
 
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.SLIDE_WORKFLOWS_TOKEN }}
           repository: ${{ github.event.client_payload.github.payload.repository.full_name }}
           issue-number: ${{ github.event.client_payload.github.payload.issue.number }}
           body: |
