@@ -32,11 +32,9 @@ jobs:
           cargo build --target-dir out
           out/debug/slide ${{ github.event.client_payload.slash_command.args }} &> out.slide || true
           SLIDE_OUT=$(cat out.slide)
-          SLIDE_OUT="${SLIDE_OUT//'%'/'%25'}"
-          SLIDE_OUT="${SLIDE_OUT//$'\n'/'%0A'}"
-          SLIDE_OUT="${SLIDE_OUT//$'\r'/'%0D'}"
-          echo $SLIDE_OUT
-          echo "::set-output name=matrix::{\"slide_out\":\"$SLIDE_OUT\"}"
+          JSON_STRING=$(jq -n --arg out "$SLIDE_OUT" '{slide_out: $out}')
+          echo $JSON_STRING
+          echo "::set-output name=matrix::$JSON_STRING"
 
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v1
