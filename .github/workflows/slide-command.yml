@@ -37,15 +37,6 @@ jobs:
           SLIDE_OUT="${SLIDE_OUT//$'\r'/'%0D'}"
           echo $SLIDE_OUT
           echo "::set-output name=matrix::{\"slide_out\":\"$SLIDE_OUT\"}"
-          
-      - name: Unmarshall spaces
-        id: unmarshall
-        uses: frabert/replace-string-action@v1.1
-        with:
-          pattern: '(\\ )'
-          string: "${{ steps.run.outputs.slide-out }}"
-          replace-with: '\ '
-          flags: 'g'
 
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v1
