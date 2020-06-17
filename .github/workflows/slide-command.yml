@@ -65,14 +65,14 @@ jobs:
 
       - name: Expectation success
         id: exp_succ
-        if: ${{ steps.exp.outputs.exp_exists == 'true' && steps.exp.outputs.exp_succ }}
+        if: ${{ steps.exp.outputs.exp_exists == 'true' && steps.exp.outputs.exp_succ == 'true' }}
         run: |
           echo "${{ steps.exp.outputs.exp_exists }}"
           echo "::set-output name=msg:::white_check_mark: expectation succeeded"
 
       - name: Expectation failure
         id: exp_fail
-        if: ${{ steps.exp.outputs.exp_exists == 'true' && !steps.exp.outputs.exp_succ }}
+        if: ${{ steps.exp.outputs.exp_exists == 'true' && steps.exp.outputs.exp_succ == 'false' }}
         run: |
           echo "${{ steps.exp.outputs.exp_exists }}"
           echo "::set-output name=msg:::x: expectation failed"
@@ -97,7 +97,7 @@ jobs:
             [1]: https://github.com/ayazhafiz/slide-workflows/actions/runs/${{ github.run_id }}
 
       - name: Create issue
-        if: ${{ steps.exp.outputs.exp_exists == 'true' && !steps.exp.outputs.exp_succ }}
+        if: ${{ steps.exp.outputs.exp_exists == 'true' && steps.exp.outputs.exp_succ == 'false' }}
         uses: maxkomarychev/oction-create-issue@v0.7.1
         with:
           token: ${{ secrets.SLIDE_WORKFLOWS_TOKEN }}
