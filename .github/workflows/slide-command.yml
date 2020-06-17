@@ -95,15 +95,18 @@ jobs:
             [Command run output][1]
 
             [1]: https://github.com/ayazhafiz/slide-workflows/actions/runs/${{ github.run_id }}
-
+            
+            
       - name: Create issue
         if: ${{ steps.exp.outputs.exp_exists == 'true' && steps.exp.outputs.exp_succ == 'false' }}
-        uses: maxkomarychev/oction-create-issue@v0.7.1
-        with:
-          token: ${{ secrets.SLIDE_WORKFLOWS_TOKEN }}
-          repo: ${{ github.event.client_payload.github.payload.repository.full_name }}
-          title: "slide ${{ github.event.client_payload.slash_command.args }} -/> ${{ steps.split.outputs._1 }}"
-          body: |
+        uses: bryan-nice/git-issue-creation@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.SLIDE_WORKFLOWS_TOKEN }}
+          GITHUB_COMMIT_SHA: ${{ github.sha }}
+          GITHUB_REPO_OWNER: 'ayazhafiz'
+          GITHUB_REPO_NAME: ${{ github.event.client_payload.github.payload.repository.full_name }}
+          GITHUB_ISSUE_TITLE: 'slide ${{ github.event.client_payload.slash_command.args }} -/> ${{ steps.split.outputs._1 }}'
+          GITHUB_ISSUE_BODY: |
             Expected `slide ${{ github.event.client_payload.slash_command.args }}` to output:
 
             ```
@@ -122,4 +125,3 @@ jobs:
 
             [1]: ${{ github.event.client_payload.github.payload.comment.html_url }}
             [2]: https://github.com/ayazhafiz/slide-workflows/actions/runs/${{ github.run_id }}
-
