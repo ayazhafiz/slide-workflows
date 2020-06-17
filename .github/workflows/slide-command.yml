@@ -121,7 +121,7 @@ jobs:
 
             This issue was created for a failed [slide command expectation][1].
 
-            [Command run output][2].
+            [Command run output][2]
 
             [1]: ${{ github.event.client_payload.github.payload.comment.html_url }}
             [2]: https://github.com/ayazhafiz/slide-workflows/actions/runs/${{ github.run_id }}
