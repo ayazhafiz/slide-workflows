@@ -60,20 +60,20 @@ jobs:
       - name: Check expectation
         id: exp
         run: |
-          echo "::set-output name=exp_exists::${{ steps.split.outputs._1 == null }}"
+          echo "::set-output name=exp_exists::${{ steps.split.outputs._1 != null }}"
           echo "::set-output name=exp_succ::${{ steps.split.outputs._1 == fromJson(steps.run.outputs.matrix).slide_out }}"
 
       - name: Expectation success
         id: exp_succ
         if: ${{ steps.exp.outputs.exp_exists && steps.exp.outputs.exp_succ }}
         run: |
-          echo "::set-output name=msg::\":white_check_mark: expectation succeeded\""
+          echo "::set-output name=msg:::white_check_mark: expectation succeeded"
 
       - name: Expectation failure
         id: exp_fail
         if: ${{ steps.exp.outputs.exp_exists && !steps.exp.outputs.exp_succ }}
         run: |
-          echo "::set-output name=msg::\":x: expectation failed\""
+          echo "::set-output name=msg:::x: expectation failed"
 
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v1
