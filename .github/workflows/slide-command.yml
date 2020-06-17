@@ -67,12 +67,14 @@ jobs:
         id: exp_succ
         if: ${{ steps.exp.outputs.exp_exists && steps.exp.outputs.exp_succ }}
         run: |
+          echo "${{ steps.exp.outputs.exp_exists }}"
           echo "::set-output name=msg:::white_check_mark: expectation succeeded"
 
       - name: Expectation failure
         id: exp_fail
         if: ${{ steps.exp.outputs.exp_exists && !steps.exp.outputs.exp_succ }}
         run: |
+          echo "${{ steps.exp.outputs.exp_exists }}"
           echo "::set-output name=msg:::x: expectation failed"
 
       - name: Create comment
