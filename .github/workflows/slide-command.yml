@@ -103,7 +103,8 @@ jobs:
         uses: maxkomarychev/oction-create-issue@v0.7.1
         with:
           token: ${{ secrets.SLIDE_WORKFLOWS_TOKEN }}
-          repo: ${{ github.event.client_payload.github.payload.repository.full_name }}
+          owner: ayazhafiz
+          repo: slide
           title: "slide ${{ github.event.client_payload.slash_command.args }} -/> ${{ steps.split.outputs._1 }}"
           body: |
             Expected `slide ${{ github.event.client_payload.slash_command.args }}` to output:
