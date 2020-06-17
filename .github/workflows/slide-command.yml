@@ -105,7 +105,7 @@ jobs:
           token: ${{ secrets.SLIDE_WORKFLOWS_TOKEN }}
           owner: ayazhafiz
           repo: slide
-          title: "slide ${{ github.event.client_payload.slash_command.args }} -/> ${{ steps.split.outputs._1 }}"
+          title: "slide ${{ steps.split.outputs._0 }} -/> ${{ steps.split.outputs._1 }}"
           body: |
             Expected `slide ${{ github.event.client_payload.slash_command.args }}` to output:
 
