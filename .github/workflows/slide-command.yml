@@ -107,7 +107,7 @@ jobs:
           repo: slide
           title: "slide ${{ steps.split.outputs._0 }} -/> ${{ steps.split.outputs._1 }}"
           body: |
-            Expected `slide ${{ github.event.client_payload.slash_command.args }}` to output:
+            Expected `slide ${{ steps.split.outputs._0 }}` to output
 
             ```
             ${{ steps.split.outputs._1 }}
