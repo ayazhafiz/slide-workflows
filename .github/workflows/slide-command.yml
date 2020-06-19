@@ -33,10 +33,10 @@ jobs:
         with:
           path: |
             ~/.cache/sccache
-            ~/.cargo/
-            ~/.rustup/
+            ~/.cargo
+            ~/.rustup
             target
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.toml') }}
           restore-keys: |
             ${{ runner.os }}-cargo-
 
